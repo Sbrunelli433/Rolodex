@@ -6,6 +6,7 @@ import './App.css';
 class App extends React.Component{
   constructor(){
     super();
+
     this.state={
      monsters: [],
      searchField: '',
@@ -16,6 +17,11 @@ class App extends React.Component{
     fetch('https://jsonplaceholder.typicode.com/users')
     .then(response => response.json())
     .then(users => this.setState({ monsters: users}));
+  }
+
+  //arrow function makes it easier to write class components and their methods
+  handleChange = (e) => {
+    this.setState({searchField: e.target.value})
   }
   
   render(){
@@ -31,8 +37,7 @@ class App extends React.Component{
         <div className="App">
           <SearchBox
             placeholder='search monsters' 
-            handleChange={e => this.setState({searchField:e.target.value}, 
-              () => console.log(this.state))}
+            handleChange={this.handleChange}
           />
           <CardList monsters={filteredMonsters}/>
         </div>
