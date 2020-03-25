@@ -6,7 +6,8 @@ class App extends React.Component{
   constructor(){
     super();
     this.state={
-     monsters: []
+     monsters: [],
+     searchField: '',
     };
   }
 
@@ -17,10 +18,21 @@ class App extends React.Component{
   }
   
   render(){
+
+    //use the search function to filter out the monsters names that don't match the field
+    //Do this by destructuring and create a new array using .filter
+      const { monsters, searchField }= this.state;
+      const filteredMonsters = monsters.filter(monster => 
+        monster.name.toLowerCase().includes(searchField.toLowerCase())
+        );
+
       return (
         <div className="App">
-        <input type='search' placeholder='search monsters'/>
-          <CardList monsters={this.state.monsters}/>
+          <input type='search' placeholder='search monsters' 
+          onChange={e => this.setState({searchField:e.target.value}, 
+            () => console.log(this.state))}
+          />
+          <CardList monsters={filteredMonsters}/>
         </div>
       );
   }
